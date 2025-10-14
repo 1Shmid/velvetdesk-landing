@@ -1,18 +1,23 @@
-'use client'
+'use client';
 
-import { Phone, CheckCircle } from 'lucide-react'
+import { Phone, CheckCircle } from 'lucide-react';
+import { useVapi } from '@/lib/useVapi';
+import { ASSISTANT_IDS } from '@/lib/vapiConfig';
 
 interface HeroSectionProps {
-  t: any
+  t: any;
 }
 
 export default function HeroSection({ t }: HeroSectionProps) {
+  const { startCall, stopCall, isCallActive } = useVapi();
+
   const handleDemoCall = () => {
-    const demoSection = document.querySelector('#demo')
-    if (demoSection) {
-      demoSection.scrollIntoView({ behavior: 'smooth' })
+    if (isCallActive) {
+      stopCall();
+    } else {
+      startCall(ASSISTANT_IDS.marta);
     }
-  }
+  };
 
   return (
     <section className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-purple-50 flex items-center relative overflow-hidden py-20">
@@ -57,19 +62,33 @@ export default function HeroSection({ t }: HeroSectionProps) {
             <div className="flex flex-col items-start gap-3 pt-4">
               <button 
                 onClick={handleDemoCall}
-                className="flex items-center gap-3 px-8 py-4 bg-purple-600 text-white rounded-xl font-semibold text-lg hover:bg-purple-700 transition-all shadow-lg hover:shadow-xl"
+                className={`flex items-center gap-3 px-8 py-4 rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl ${
+                  isCallActive
+                    ? 'bg-red-500 hover:bg-red-600 text-white'
+                    : 'bg-purple-600 hover:bg-purple-700 text-white'
+                }`}
               >
                 <Phone className="w-6 h-6" />
-                {t.hero.ctaButton}
+                {isCallActive ? t.hero.endCall : t.hero.ctaButton}
               </button>
               
-              <p className="text-sm text-gray-500">
-                {t.hero.ctaSubtext}
-              </p>
+              {isCallActive && (
+                <p className="text-sm text-purple-600 font-medium animate-pulse">
+                  📞 {t.hero.callActive}
+                </p>
+              )}
               
-              <a href="#pricing" className="text-purple-600 font-medium hover:underline">
-                {t.hero.ctaLink}
-              </a>
+              {!isCallActive && (
+                <>
+                  <p className="text-sm text-gray-500">
+                    {t.hero.ctaSubtext}
+                  </p>
+                  
+                  <a href="#pricing" className="text-purple-600 font-medium hover:underline">
+                    {t.hero.ctaLink}
+                  </a>
+                </>
+              )}
             </div>
           </div>
           
@@ -77,34 +96,54 @@ export default function HeroSection({ t }: HeroSectionProps) {
           <div className="flex flex-col items-center gap-6 lg:items-end">
             <div className="relative w-[280px] h-[580px]">
               <div className="absolute inset-0 bg-gray-900 rounded-[3rem] shadow-2xl">
-                <div className="absolute inset-3 bg-gradient-to-b from-purple-600 to-purple-700 rounded-[2.5rem] overflow-hidden">
+                <div className={`absolute inset-3 rounded-[2.5rem] overflow-hidden transition-all ${
+                  isCallActive 
+                    ? 'bg-gradient-to-b from-green-500 to-green-600' 
+                    : 'bg-gradient-to-b from-purple-600 to-purple-700'
+                }`}>
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-gray-900 rounded-b-3xl z-10"></div>
                   
                   <div className="flex flex-col items-center justify-between h-full py-12 px-6">
-                    <p className="text-purple-200 text-sm">{t.hero.phoneScreen.incomingCall}</p>
+                    <p className={`text-sm ${isCallActive ? 'text-green-100' : 'text-purple-200'}`}>
+                      {isCallActive ? t.hero.callActive : t.hero.phoneScreen.incomingCall}
+                    </p>
                     
                     <div className="flex flex-col items-center gap-6">
-                      <div className="w-24 h-24 bg-purple-500 rounded-full flex items-center justify-center">
+                      <div className={`w-24 h-24 rounded-full flex items-center justify-center ${
+                        isCallActive ? 'bg-green-400 animate-pulse' : 'bg-purple-500'
+                      }`}>
                         <Phone className="w-12 h-12 text-white" />
                       </div>
                       
                       <div className="text-center">
                         <p className="text-white font-semibold text-lg">{t.hero.phoneScreen.assistantName}</p>
-                        <p className="text-purple-200 text-sm mt-1">{t.hero.phoneScreen.phoneNumber}</p>
+                        <p className={`text-sm mt-1 ${isCallActive ? 'text-green-100' : 'text-purple-200'}`}>
+                          {t.hero.phoneScreen.phoneNumber}
+                        </p>
                       </div>
                     </div>
                     
                     <div className="flex gap-16">
                       <button 
-                        className="w-16 h-16 bg-red-500 hover:bg-red-600 rounded-full flex items-center justify-center transition-all cursor-not-allowed opacity-70"
-                        disabled
+                        onClick={isCallActive ? stopCall : undefined}
+                        className={`w-16 h-16 rounded-full flex items-center justify-center transition-all ${
+                          isCallActive
+                            ? 'bg-red-500 hover:bg-red-600 cursor-pointer hover:scale-110'
+                            : 'bg-red-500 opacity-70 cursor-not-allowed'
+                        }`}
+                        disabled={!isCallActive}
                       >
                         <Phone className="w-7 h-7 text-white rotate-135" />
                       </button>
                       
                       <button 
                         onClick={handleDemoCall}
-                        className="w-16 h-16 bg-green-500 hover:bg-green-600 rounded-full flex items-center justify-center transition-all hover:scale-110 cursor-pointer shadow-lg"
+                        className={`w-16 h-16 rounded-full flex items-center justify-center transition-all shadow-lg ${
+                          isCallActive
+                            ? 'bg-gray-400 cursor-not-allowed opacity-70'
+                            : 'bg-green-500 hover:bg-green-600 cursor-pointer hover:scale-110'
+                        }`}
+                        disabled={isCallActive}
                       >
                         <Phone className="w-7 h-7 text-white" />
                       </button>
@@ -136,5 +175,5 @@ export default function HeroSection({ t }: HeroSectionProps) {
         </div>
       </div>
     </section>
-  )
+  );
 }

@@ -11,6 +11,8 @@ export const translations = {
       savings: '€1,650/month',
       savingsText: 'vs hiring an admin.',
       ctaButton: 'Try a Demo Call Now',
+      endCall: 'End Call',
+      callActive: 'Call in progress...',
       ctaSubtext: 'Free • Takes 30 seconds • No signup',
       ctaLink: 'Or start your 30-day free trial →',
       phoneScreen: {
@@ -26,7 +28,6 @@ export const translations = {
     },
 
     // Social Proof Section
-    // В translations.ts - секция socialProof для EN
     socialProof: {
       title: 'Trusted by Businesses Across Europe',
       subtitle: 'Real stories from real customers',
@@ -65,7 +66,6 @@ export const translations = {
     },
 
     // Features Section
-    // В translations.ts - секция features для EN
     features: {
       title: 'Everything Your Business Needs',
       subtitle: 'VelvetDesk handles all customer interactions professionally',
@@ -104,7 +104,6 @@ export const translations = {
     },
 
     // How To Get Started Section
-    // В translations.ts - секция howToStart для EN
     howToStart: {
       title: 'How to Get Started',
       subtitle: 'From signup to first call in 48 hours.',
@@ -137,19 +136,23 @@ export const translations = {
     },
 
     // Hear It In Action Section
-    // В translations.ts - секция demo для EN
-    demo: {
+    hearItInAction: {
       title: 'Hear It In Action',
       subtitle: 'Call our demo businesses right now. Speak freely in the language you prefer. The system will adapt automatically.',
       trySaying: 'Try saying:',
       callButton: 'Call Now',
-      businesses: [
+      tryDemo: 'Try Demo',
+      endCall: 'End Call',
+      unavailable: 'Unavailable',
+      demos: [
         {
           emoji: '💇',
           type: 'Beauty Salon',
           name: 'Bella Hair Studio',
           image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=800&h=600&fit=crop',
           phone: '+34 xxx xxx xxx',
+          title: 'Beauty Salon',
+          description: 'Experience booking a hair appointment with Sofia',
           suggestions: [
             '"I\'d like to book a haircut for tomorrow"',
             '"What are your prices for highlights?"',
@@ -162,6 +165,8 @@ export const translations = {
           name: 'SmileCenter',
           image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&h=600&fit=crop',
           phone: '+34 xxx xxx xxx',
+          title: 'Dental Clinic',
+          description: 'Try scheduling a dental checkup with Laura',
           suggestions: [
             '"I need to book a cleaning appointment"',
             '"Do you accept emergency patients?"',
@@ -174,6 +179,8 @@ export const translations = {
           name: 'La Terrazza',
           image: 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800&h=600&fit=crop',
           phone: '+34 xxx xxx xxx',
+          title: 'Restaurant',
+          description: 'Make a dinner reservation with Carlos',
           suggestions: [
             '"I\'d like to reserve a table for 4 people tonight"',
             '"Do you have vegetarian options?"',
@@ -184,7 +191,6 @@ export const translations = {
     },
 
     // Pricing Section
-    // В translations.ts - секция pricing для EN
     pricing: {
       title: 'Simple, Transparent Pricing',
       subtitle: 'One plan. Everything included.',
@@ -214,7 +220,6 @@ export const translations = {
     },
 
     // FAQ Section
-    // В translations.ts - секция faq для EN
     faq: {
       title: 'Frequently Asked Questions',
       items: [
@@ -254,7 +259,6 @@ export const translations = {
     },
 
     // Final CTA Section
-    // В translations.ts - секция finalCTA для EN
     finalCTA: {
       title: 'Ready to Never Miss Another Customer?',
       subtitle: 'Join 500+ businesses using VelvetDesk to grow their revenue.',
@@ -267,7 +271,6 @@ export const translations = {
     },
 
     // Footer
-    // В translations.ts - секция footer для EN
     footer: {
       logo: 'VelvetDesk',
       tagline: 'Your AI receptionist.\nNever miss a customer again.',
@@ -295,6 +298,8 @@ export const translations = {
       savings: '€1.650/mes',
       savingsText: 'vs contratar un administrativo.',
       ctaButton: 'Prueba una Llamada Demo',
+      endCall: 'Finalizar Llamada',
+      callActive: 'Llamada en curso...',
       ctaSubtext: 'Gratis • 30 segundos • Sin registro',
       ctaLink: 'O inicia tu prueba gratuita de 30 días →',
       phoneScreen: {
@@ -310,7 +315,6 @@ export const translations = {
     },
 
     // Social Proof Section
-    // В translations.ts - секция socialProof для ES
     socialProof: {
       title: 'Confiado por Negocios en Toda Europa',
       subtitle: 'Historias reales de clientes reales',
@@ -349,7 +353,6 @@ export const translations = {
     },
 
     // Features Section
-    // В translations.ts - секция features для ES
     features: {
       title: 'Todo lo Que Tu Negocio Necesita',
       subtitle: 'VelvetDesk gestiona todas las interacciones con clientes profesionalmente',
@@ -388,7 +391,6 @@ export const translations = {
     },
 
     // How To Get Started Section
-    // В translations.ts - секция howToStart для ES
     howToStart: {
       title: 'Cómo Empezar',
       subtitle: 'Desde el registro hasta la primera llamada en 48 horas.',
@@ -421,19 +423,23 @@ export const translations = {
     },
 
     // Hear It In Action Section
-    // В translations.ts - секция demo для ES
-    demo: {
+    hearItInAction: {
       title: 'Escúchalo en Acción',
       subtitle: 'Llama a nuestros negocios demo ahora mismo. Habla libremente en el idioma que prefieras. El sistema se adaptará automáticamente.',
       trySaying: 'Prueba decir:',
       callButton: 'Llamar Ahora',
-      businesses: [
+      tryDemo: 'Probar Demo',
+      endCall: 'Finalizar Llamada',
+      unavailable: 'No Disponible',
+      demos: [
         {
           emoji: '💇',
           type: 'Salón de Belleza',
           name: 'Bella Hair Studio',
           image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=800&h=600&fit=crop',
           phone: '+34 xxx xxx xxx',
+          title: 'Salón de Belleza',
+          description: 'Prueba reservar una cita de peluquería con Sofia',
           suggestions: [
             '"Me gustaría reservar un corte de pelo para mañana"',
             '"¿Cuáles son sus precios para mechas?"',
@@ -446,6 +452,8 @@ export const translations = {
           name: 'SmileCenter',
           image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&h=600&fit=crop',
           phone: '+34 xxx xxx xxx',
+          title: 'Clínica Dental',
+          description: 'Intenta programar un chequeo dental con Laura',
           suggestions: [
             '"Necesito reservar una cita de limpieza"',
             '"¿Atienden pacientes de emergencia?"',
@@ -458,6 +466,8 @@ export const translations = {
           name: 'La Terrazza',
           image: 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800&h=600&fit=crop',
           phone: '+34 xxx xxx xxx',
+          title: 'Restaurante',
+          description: 'Haz una reserva para cenar con Carlos',
           suggestions: [
             '"Me gustaría reservar una mesa para 4 personas esta noche"',
             '"¿Tienen opciones vegetarianas?"',
@@ -468,7 +478,6 @@ export const translations = {
     },
 
     // Pricing Section
-    // В translations.ts - секция pricing para ES
     pricing: {
       title: 'Precios Simples y Transparentes',
       subtitle: 'Un plan. Todo incluido.',
@@ -498,7 +507,6 @@ export const translations = {
     },
 
     // FAQ Section
-    // В translations.ts - секция faq para ES
     faq: {
       title: 'Preguntas Frecuentes',
       items: [
@@ -538,7 +546,6 @@ export const translations = {
     },
 
     // Final CTA Section
-    // В translations.ts - секция finalCTA para ES
     finalCTA: {
       title: '¿Listo Para No Perder Otro Cliente?',
       subtitle: 'Únete a más de 500 negocios usando VelvetDesk para aumentar sus ingresos.',
@@ -551,7 +558,6 @@ export const translations = {
     },
 
     // Footer
-    // В translations.ts - секция footer para ES
     footer: {
       logo: 'VelvetDesk',
       tagline: 'Tu recepcionista IA.\nNunca más pierdas un cliente.',
