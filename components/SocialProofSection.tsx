@@ -9,42 +9,13 @@ interface SocialProofSectionProps {
 
 export default function SocialProofSection({ t }: SocialProofSectionProps) {
   const [currentTestimonial, setCurrentTestimonial] = useState(0)
-  
-  const logos = [
-    { name: 'Bella Salon', category: 'Beauty' },
-    { name: 'Dr. García Dental', category: 'Healthcare' },
-    { name: 'La Terrazza', category: 'Restaurant' },
-    { name: 'Global Travel', category: 'Agency' },
-    { name: 'Fitness Hub', category: 'Gym' }
-  ]
-
-  const testimonials = [
-    {
-      text: "VelvetDesk doubled our bookings in the first month. Customers love that they can call anytime and get instant answers — even at 11 PM.",
-      author: "Maria González, Owner",
-      company: "Bella Beauty Salon, Madrid",
-      image: "https://images.unsplash.com/photo-1581065178047-8ee15951ede6?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200&h=200"
-    },
-    {
-      text: "We used to miss 30% of calls after hours. Now VelvetDesk handles everything — appointment booking, service questions, even rescheduling. Our patients love it!",
-      author: "Dr. Carlos Méndez",
-      company: "SmileCenter Dental Clinic, Barcelona",
-      image: "https://images.unsplash.com/photo-1612349317150-e413f6a5b16d?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200&h=200"
-    },
-    {
-      text: "Best decision we made this year. VelvetDesk books tables 24/7 and confirms reservations automatically. It pays for itself in the first week!",
-      author: "Paolo Rossi",
-      company: "La Terrazza Restaurant, Valencia",
-      image: "https://images.unsplash.com/photo-1560250097-0b93528c311a?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&w=200&h=200"
-    }
-  ]
 
   const nextTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev + 1) % testimonials.length)
+    setCurrentTestimonial((prev) => (prev + 1) % t.socialProof.testimonials.length)
   }
 
   const prevTestimonial = () => {
-    setCurrentTestimonial((prev) => (prev - 1 + testimonials.length) % testimonials.length)
+    setCurrentTestimonial((prev) => (prev - 1 + t.socialProof.testimonials.length) % t.socialProof.testimonials.length)
   }
 
   return (
@@ -53,15 +24,43 @@ export default function SocialProofSection({ t }: SocialProofSectionProps) {
         
         {/* Заголовок */}
         <div className="text-center mb-16">
-            <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
-                Trusted by Businesses Across Europe
-            </h2>
-            <p className="text-xl text-gray-600">
-                Real stories from real customers
-            </p>
+          <h2 className="text-4xl lg:text-5xl font-bold text-gray-900 mb-4">
+            {t.socialProof.title}
+          </h2>
+          <p className="text-xl text-gray-600">
+            {t.socialProof.subtitle}
+          </p>
+        </div>
+
+        {/* Статистика */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-12 max-w-4xl mx-auto mb-20">
+          <div className="text-center">
+            <div className="text-5xl font-bold text-purple-600 mb-2">
+              {t.socialProof.stat1.number}
             </div>
-        
-        
+            <div className="text-gray-600 text-lg">
+              {t.socialProof.stat1.label}
+            </div>
+          </div>
+          
+          <div className="text-center">
+            <div className="text-5xl font-bold text-purple-600 mb-2">
+              {t.socialProof.stat2.number}
+            </div>
+            <div className="text-gray-600 text-lg">
+              {t.socialProof.stat2.label}
+            </div>
+          </div>
+          
+          <div className="text-center">
+            <div className="text-5xl font-bold text-purple-600 mb-2">
+              {t.socialProof.stat3.number}
+            </div>
+            <div className="text-gray-600 text-lg">
+              {t.socialProof.stat3.label}
+            </div>
+          </div>
+        </div>
         
         {/* CAROUSEL ОТЗЫВОВ */}
         <div className="max-w-3xl mx-auto relative">
@@ -72,15 +71,15 @@ export default function SocialProofSection({ t }: SocialProofSectionProps) {
             
             {/* Текст отзыва */}
             <p className="text-lg text-gray-800 italic leading-relaxed mb-8 min-h-[100px]">
-              {testimonials[currentTestimonial].text}
+              {t.socialProof.testimonials[currentTestimonial].text}
             </p>
             
             {/* Автор */}
             <div className="flex items-center gap-4">
               {/* Фото (реальное из Unsplash) */}
               <img 
-                src={testimonials[currentTestimonial].image}
-                alt={testimonials[currentTestimonial].author}
+                src={t.socialProof.testimonials[currentTestimonial].image}
+                alt={t.socialProof.testimonials[currentTestimonial].author}
                 className="w-16 h-16 rounded-full object-cover flex-shrink-0"
               />
               
@@ -91,10 +90,10 @@ export default function SocialProofSection({ t }: SocialProofSectionProps) {
                   ))}
                 </div>
                 <p className="font-semibold text-gray-900">
-                  {testimonials[currentTestimonial].author}
+                  {t.socialProof.testimonials[currentTestimonial].author}
                 </p>
                 <p className="text-sm text-gray-600">
-                  {testimonials[currentTestimonial].company}
+                  {t.socialProof.testimonials[currentTestimonial].company}
                 </p>
               </div>
             </div>
@@ -112,7 +111,7 @@ export default function SocialProofSection({ t }: SocialProofSectionProps) {
             
             {/* Индикаторы */}
             <div className="flex items-center gap-2">
-              {testimonials.map((_, index) => (
+              {t.socialProof.testimonials.map((_: any, index: number) => (
                 <button
                   key={index}
                   onClick={() => setCurrentTestimonial(index)}

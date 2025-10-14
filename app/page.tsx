@@ -1,3 +1,6 @@
+// app/page.tsx
+'use client'
+
 import HeroSection from '@/components/HeroSection'
 import SocialProofSection from '@/components/SocialProofSection'
 import FeaturesSection from '@/components/FeaturesSection'
@@ -7,10 +10,10 @@ import PricingSection from '@/components/PricingSection'
 import FAQSection from '@/components/FAQSection'
 import FinalCTASection from '@/components/FinalCTASection'
 import Footer from '@/components/Footer'
-import { translations } from '@/lib/translations'
+import { useLanguage } from '@/lib/useLanguage'
 
 export default function Home() {
-  const t = translations.en
+  const t = useLanguage()
 
   return (
     <main className="min-h-screen bg-white">

@@ -1,3 +1,5 @@
+'use client'
+
 import { Phone } from 'lucide-react'
 
 interface FooterProps {
@@ -15,49 +17,47 @@ export default function Footer({ t }: FooterProps) {
               <div className="w-10 h-10 bg-purple-600 rounded-lg flex items-center justify-center">
                 <Phone className="w-6 h-6 text-white" />
               </div>
-              <span className="text-2xl font-bold text-white">VelvetDesk</span>
+              <span className="text-2xl font-bold text-white">{t.footer.logo}</span>
             </div>
-            <p className="text-sm text-gray-400 leading-relaxed">
-              Your AI receptionist.
-              <br />
-              Never miss a customer again.
+            <p className="text-sm text-gray-400 leading-relaxed whitespace-pre-line">
+              {t.footer.tagline}
             </p>
           </div>
           
           {/* Колонка 2: Legal */}
           <div>
-            <h3 className="text-white font-semibold mb-4 text-lg">Legal</h3>
+            <h3 className="text-white font-semibold mb-4 text-lg">{t.footer.legal.title}</h3>
             <div className="space-y-3">
               <a 
                 href="#privacy"
                 className="block text-gray-400 hover:text-white transition-colors"
               >
-                Privacy Policy
+                {t.footer.legal.privacyPolicy}
               </a>
               <a 
                 href="#terms"
                 className="block text-gray-400 hover:text-white transition-colors"
               >
-                Terms of Service
+                {t.footer.legal.termsOfService}
               </a>
             </div>
           </div>
           
           {/* Колонка 3: Contact */}
           <div>
-            <h3 className="text-white font-semibold mb-4 text-lg">Contact</h3>
+            <h3 className="text-white font-semibold mb-4 text-lg">{t.footer.contact.title}</h3>
             <div className="space-y-3">
               <a 
-                href="mailto:support@velvetdesk.ai"
+                href={`mailto:${t.footer.contact.email}`}
                 className="block text-gray-400 hover:text-white transition-colors"
               >
-                support@velvetdesk.ai
+                {t.footer.contact.email}
               </a>
               <a 
-                href="tel:+34xxxxxxxxx"
+                href={`tel:${t.footer.contact.phone.replace(/\s/g, '')}`}
                 className="block text-gray-400 hover:text-white transition-colors"
               >
-                +34 xxx xxx xxx
+                {t.footer.contact.phone}
               </a>
             </div>
           </div>
@@ -66,7 +66,7 @@ export default function Footer({ t }: FooterProps) {
         {/* Copyright */}
         <div className="pt-8 border-t border-gray-800 text-center">
           <p className="text-sm text-gray-500">
-            © 2025 VelvetDesk. All rights reserved.
+            {t.footer.copyright}
           </p>
         </div>
       </div>
