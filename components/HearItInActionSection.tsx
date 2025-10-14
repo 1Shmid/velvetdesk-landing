@@ -46,8 +46,8 @@ export default function HearItInActionSection({ t }: HearItInActionSectionProps)
           </p>
         </div>
         
-        {/* Карточки - добавили scroll на мобилке */}
-        <div className="md:grid md:grid-cols-3 md:gap-8 max-w-6xl mx-auto flex md:flex-none overflow-x-auto gap-6 snap-x snap-mandatory pb-4 md:pb-0 scrollbar-hide">
+        {/* Карточки - вертикальный grid на всех устройствах */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-6xl mx-auto">
           {t.hearItInAction.demos.map((demo: any, index: number) => {
             const IconComponent = iconMap[index];
             const assistantId = assistantMap[index];
@@ -57,7 +57,7 @@ export default function HearItInActionSection({ t }: HearItInActionSectionProps)
             return (
               <div 
                 key={index}
-                className={`bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all min-w-[300px] md:min-w-0 snap-center ${
+                className={`bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all ${
                   isAnotherCardActive ? 'opacity-60' : ''
                 }`}
               >
