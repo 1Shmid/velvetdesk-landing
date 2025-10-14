@@ -31,6 +31,7 @@ export const translations = {
     socialProof: {
       title: 'Trusted by Businesses Across Europe',
       subtitle: 'Real stories from real customers',
+      swipeHint: 'Swipe to see more', 
       stat1: {
         number: '500+',
         label: 'Active Businesses'
@@ -318,6 +319,7 @@ export const translations = {
     socialProof: {
       title: 'Confiado por Negocios en Toda Europa',
       subtitle: 'Historias reales de clientes reales',
+      swipeHint: 'Desliza para ver más',
       stat1: {
         number: '500+',
         label: 'Negocios Activos'
