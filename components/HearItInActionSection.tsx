@@ -1,17 +1,15 @@
 'use client';
 
 import { Phone, Scissors, Smile, UtensilsCrossed } from 'lucide-react';
-import { useVapi } from '@/lib/useVapi';
+import { useVapi } from '@/lib/VapiContext';
 import { ASSISTANT_IDS } from '@/lib/vapiConfig';
-import { useState } from 'react';
 
 interface HearItInActionSectionProps {
   t: any;
 }
 
 export default function HearItInActionSection({ t }: HearItInActionSectionProps) {
-  const { startCall, stopCall, isCallActive } = useVapi();
-  const [activeAssistantId, setActiveAssistantId] = useState<string | null>(null);
+  const { startCall, stopCall, isCallActive, activeAssistantId } = useVapi();
 
   // Маппинг векторных иконок
   const iconMap = [
@@ -29,15 +27,10 @@ export default function HearItInActionSection({ t }: HearItInActionSectionProps)
 
   const handleDemoCall = (assistantId: string) => {
     if (isCallActive && activeAssistantId === assistantId) {
-      // Завершаем звонок только если это ЭТОТ агент
       stopCall();
-      setActiveAssistantId(null);
     } else if (!isCallActive) {
-      // Начинаем новый звонок только если НЕТ активного звонка
       startCall(assistantId);
-      setActiveAssistantId(assistantId);
     }
-    // Если звонок идёт с ДРУГИМ агентом - ничего не делаем
   };
 
   return (
@@ -53,8 +46,8 @@ export default function HearItInActionSection({ t }: HearItInActionSectionProps)
           </p>
         </div>
         
-        {/* Карточки */}
-        <div className="grid md:grid-cols-3 gap-8 max-w-6xl mx-auto">
+        {/* Карточки - добавили scroll на мобилке */}
+        <div className="md:grid md:grid-cols-3 md:gap-8 max-w-6xl mx-auto flex md:flex-none overflow-x-auto gap-6 snap-x snap-mandatory pb-4 md:pb-0 scrollbar-hide">
           {t.hearItInAction.demos.map((demo: any, index: number) => {
             const IconComponent = iconMap[index];
             const assistantId = assistantMap[index];
@@ -64,7 +57,7 @@ export default function HearItInActionSection({ t }: HearItInActionSectionProps)
             return (
               <div 
                 key={index}
-                className={`bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all ${
+                className={`bg-white rounded-2xl overflow-hidden shadow-xl hover:shadow-2xl transition-all min-w-[300px] md:min-w-0 snap-center ${
                   isAnotherCardActive ? 'opacity-60' : ''
                 }`}
               >
@@ -82,7 +75,6 @@ export default function HearItInActionSection({ t }: HearItInActionSectionProps)
                 <div className="p-6 text-gray-900">
                   {/* Иконка + Type */}
                   <div className="flex items-center gap-3 mb-4">
-                    {/* Фиолетовая векторная иконка в белом круге */}
                     <div className="w-12 h-12 bg-white border-2 border-purple-600 rounded-full flex items-center justify-center flex-shrink-0">
                       <IconComponent className="w-6 h-6 text-purple-600" strokeWidth={2} />
                     </div>

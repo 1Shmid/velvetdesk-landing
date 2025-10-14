@@ -1,7 +1,7 @@
 'use client';
 
 import { Phone, CheckCircle } from 'lucide-react';
-import { useVapi } from '@/lib/useVapi';
+import { useVapi } from '@/lib/VapiContext';
 import { ASSISTANT_IDS } from '@/lib/vapiConfig';
 
 interface HeroSectionProps {
@@ -9,12 +9,15 @@ interface HeroSectionProps {
 }
 
 export default function HeroSection({ t }: HeroSectionProps) {
-  const { startCall, stopCall, isCallActive } = useVapi();
+  const { startCall, stopCall, isCallActive, activeAssistantId } = useVapi();
+
+  const isThisButtonActive = isCallActive && activeAssistantId === ASSISTANT_IDS.marta;
+  const isAnotherButtonActive = isCallActive && activeAssistantId !== ASSISTANT_IDS.marta;
 
   const handleDemoCall = () => {
-    if (isCallActive) {
+    if (isThisButtonActive) {
       stopCall();
-    } else {
+    } else if (!isCallActive) {
       startCall(ASSISTANT_IDS.marta);
     }
   };
@@ -62,17 +65,25 @@ export default function HeroSection({ t }: HeroSectionProps) {
             <div className="flex flex-col items-start gap-3 pt-4">
               <button 
                 onClick={handleDemoCall}
+                disabled={isAnotherButtonActive}
                 className={`flex items-center gap-3 px-8 py-4 rounded-xl font-semibold text-lg transition-all shadow-lg hover:shadow-xl ${
-                  isCallActive
-                    ? 'bg-red-500 hover:bg-red-600 text-white'
-                    : 'bg-purple-600 hover:bg-purple-700 text-white'
+                  isThisButtonActive
+                    ? 'bg-red-500 hover:bg-red-600 text-white cursor-pointer'
+                    : isAnotherButtonActive
+                    ? 'bg-gray-400 text-gray-200 cursor-not-allowed'
+                    : 'bg-purple-600 hover:bg-purple-700 text-white cursor-pointer'
                 }`}
               >
                 <Phone className="w-6 h-6" />
-                {isCallActive ? t.hero.endCall : t.hero.ctaButton}
+                {isThisButtonActive 
+                  ? t.hero.endCall 
+                  : isAnotherButtonActive
+                  ? 'Unavailable'
+                  : t.hero.ctaButton
+                }
               </button>
               
-              {isCallActive && (
+              {isThisButtonActive && (
                 <p className="text-sm text-purple-600 font-medium animate-pulse">
                   📞 {t.hero.callActive}
                 </p>
@@ -97,27 +108,27 @@ export default function HeroSection({ t }: HeroSectionProps) {
             <div className="relative w-[280px] h-[580px]">
               <div className="absolute inset-0 bg-gray-900 rounded-[3rem] shadow-2xl">
                 <div className={`absolute inset-3 rounded-[2.5rem] overflow-hidden transition-all ${
-                  isCallActive 
+                  isThisButtonActive 
                     ? 'bg-gradient-to-b from-green-500 to-green-600' 
                     : 'bg-gradient-to-b from-purple-600 to-purple-700'
                 }`}>
                   <div className="absolute top-0 left-1/2 -translate-x-1/2 w-32 h-7 bg-gray-900 rounded-b-3xl z-10"></div>
                   
                   <div className="flex flex-col items-center justify-between h-full py-12 px-6">
-                    <p className={`text-sm ${isCallActive ? 'text-green-100' : 'text-purple-200'}`}>
-                      {isCallActive ? t.hero.callActive : t.hero.phoneScreen.incomingCall}
+                    <p className={`text-sm ${isThisButtonActive ? 'text-green-100' : 'text-purple-200'}`}>
+                      {isThisButtonActive ? t.hero.callActive : t.hero.phoneScreen.incomingCall}
                     </p>
                     
                     <div className="flex flex-col items-center gap-6">
                       <div className={`w-24 h-24 rounded-full flex items-center justify-center ${
-                        isCallActive ? 'bg-green-400 animate-pulse' : 'bg-purple-500'
+                        isThisButtonActive ? 'bg-green-400 animate-pulse' : 'bg-purple-500'
                       }`}>
                         <Phone className="w-12 h-12 text-white" />
                       </div>
                       
                       <div className="text-center">
                         <p className="text-white font-semibold text-lg">{t.hero.phoneScreen.assistantName}</p>
-                        <p className={`text-sm mt-1 ${isCallActive ? 'text-green-100' : 'text-purple-200'}`}>
+                        <p className={`text-sm mt-1 ${isThisButtonActive ? 'text-green-100' : 'text-purple-200'}`}>
                           {t.hero.phoneScreen.phoneNumber}
                         </p>
                       </div>
@@ -125,25 +136,25 @@ export default function HeroSection({ t }: HeroSectionProps) {
                     
                     <div className="flex gap-16">
                       <button 
-                        onClick={isCallActive ? stopCall : undefined}
+                        onClick={isThisButtonActive ? stopCall : undefined}
+                        disabled={!isThisButtonActive}
                         className={`w-16 h-16 rounded-full flex items-center justify-center transition-all ${
-                          isCallActive
+                          isThisButtonActive
                             ? 'bg-red-500 hover:bg-red-600 cursor-pointer hover:scale-110'
                             : 'bg-red-500 opacity-70 cursor-not-allowed'
                         }`}
-                        disabled={!isCallActive}
                       >
                         <Phone className="w-7 h-7 text-white rotate-135" />
                       </button>
                       
                       <button 
                         onClick={handleDemoCall}
+                        disabled={isCallActive}
                         className={`w-16 h-16 rounded-full flex items-center justify-center transition-all shadow-lg ${
                           isCallActive
                             ? 'bg-gray-400 cursor-not-allowed opacity-70'
                             : 'bg-green-500 hover:bg-green-600 cursor-pointer hover:scale-110'
                         }`}
-                        disabled={isCallActive}
                       >
                         <Phone className="w-7 h-7 text-white" />
                       </button>
