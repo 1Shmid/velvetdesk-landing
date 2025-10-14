@@ -36,8 +36,11 @@ export default function HowToGetStartedSection({ t }: HowToGetStartedSectionProp
             
             return (
               <React.Fragment key={index}>
-                {/* Карточка */}
-                <div className="bg-white border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow relative min-h-[380px] flex flex-col flex-1 min-w-[250px] max-w-[280px]">
+                {/* Карточка - ФОН #f5f3ff */}
+                <div 
+                  className="border border-gray-200 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow relative min-h-[380px] flex flex-col flex-1 min-w-[250px] max-w-[280px]"
+                  style={{ backgroundColor: '#f5f3ff' }}
+                >
                   {/* Номер в круге - СЛЕВА ВВЕРХУ */}
                   <div className="absolute -top-4 left-6 w-10 h-10 bg-purple-600 rounded-full flex items-center justify-center z-10">
                     <span className="text-white font-bold text-lg">{step.number}</span>
@@ -56,7 +59,7 @@ export default function HowToGetStartedSection({ t }: HowToGetStartedSectionProp
                   {/* Подчеркивание */}
                   <div className="w-12 h-1 bg-purple-600 mb-4"></div>
                   
-                  {/* Описание - УБРАЛИ text-sm, теперь text-base (как в Features) */}
+                  {/* Описание */}
                   <p className="text-gray-600 leading-relaxed mb-4 whitespace-pre-line flex-1">
                     {step.description}
                   </p>
