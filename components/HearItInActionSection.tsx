@@ -63,14 +63,15 @@ export default function HearItInActionSection({ t }: HearItInActionSectionProps)
                   
                   {/* Suggestions */}
                   <div className="mb-6">
-                    <p className="text-sm font-semibold text-gray-600 mb-3">
+                    {/* "Try saying:" - увеличили до text-base */}
+                    <p className="font-semibold text-gray-600 mb-3">
                       {t.demo.trySaying}
                     </p>
                     <ul className="space-y-2">
                       {demo.suggestions.map((suggestion: string, idx: number) => (
                         <li 
                           key={idx}
-                          className="text-sm text-gray-700 border-l-2 border-purple-600 pl-3 py-1"
+                          className="text-gray-700 border-l-2 border-purple-600 pl-3 py-1 leading-relaxed"
                         >
                           {suggestion}
                         </li>

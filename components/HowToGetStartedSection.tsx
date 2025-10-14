@@ -11,7 +11,7 @@ export default function HowToGetStartedSection({ t }: HowToGetStartedSectionProp
   // Маппинг иконок
   const iconMap = [
     FileText,    // Sign Up
-    Settings,    // Setup & Training (заменил Euro на Settings для красоты)
+    Settings,    // Setup & Training
     Link2,       // Connect
     Rocket       // Go Live
   ]
@@ -56,8 +56,8 @@ export default function HowToGetStartedSection({ t }: HowToGetStartedSectionProp
                   {/* Подчеркивание */}
                   <div className="w-12 h-1 bg-purple-600 mb-4"></div>
                   
-                  {/* Описание - занимает оставшееся место */}
-                  <p className="text-gray-600 leading-relaxed text-sm mb-4 whitespace-pre-line flex-1">
+                  {/* Описание - УБРАЛИ text-sm, теперь text-base (как в Features) */}
+                  <p className="text-gray-600 leading-relaxed mb-4 whitespace-pre-line flex-1">
                     {step.description}
                   </p>
                   
