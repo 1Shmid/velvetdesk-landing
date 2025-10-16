@@ -18,7 +18,7 @@ export const translations = {
       phoneScreen: {
         incomingCall: 'Incoming Call...',
         assistantName: 'VelvetDesk AI Assistant',
-        phoneNumber: '+34 xxx xxx xxx'
+        phoneNumber: '  '
       },
       badges: {
         setup: 'Setup in 48 hours',
@@ -151,7 +151,7 @@ export const translations = {
           type: 'Beauty Salon',
           name: 'Bella Hair Studio',
           image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=800&h=600&fit=crop',
-          phone: '+34 xxx xxx xxx',
+          phone: '  ',
           title: 'Beauty Salon',
           description: 'Experience booking a hair appointment with Sofia',
           suggestions: [
@@ -165,7 +165,7 @@ export const translations = {
           type: 'Dental Clinic',
           name: 'SmileCenter',
           image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&h=600&fit=crop',
-          phone: '+34 xxx xxx xxx',
+          phone: '  ',
           title: 'Dental Clinic',
           description: 'Try scheduling a dental checkup with Laura',
           suggestions: [
@@ -179,7 +179,7 @@ export const translations = {
           type: 'Restaurant',
           name: 'La Terrazza',
           image: 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800&h=600&fit=crop',
-          phone: '+34 xxx xxx xxx',
+          phone: '  ',
           title: 'Restaurant',
           description: 'Make a dinner reservation with Carlos',
           suggestions: [
@@ -283,7 +283,7 @@ export const translations = {
       contact: {
         title: 'Contact',
         email: 'support@velvetdesk.ai',
-        phone: '+34 xxx xxx xxx'
+        phone: '  '
       },
       copyright: '© 2025 VelvetDesk. All rights reserved.'
     }
@@ -310,7 +310,7 @@ export const translations = {
         phoneScreen: {
           incomingCall: 'Llamada Entrante...',
           assistantName: 'Asistente IA VelvetDesk',
-          phoneNumber: '+34 xxx xxx xxx'
+          phoneNumber: '  '
         },
         badges: {
           setup: 'Instalación en 48 horas',
@@ -443,7 +443,7 @@ export const translations = {
             type: 'Salón de Belleza',
             name: 'Bella Hair Studio',
             image: 'https://images.unsplash.com/photo-1562322140-8baeececf3df?w=800&h=600&fit=crop',
-            phone: '+34 xxx xxx xxx',
+            phone: '  ',
             title: 'Salón de Belleza',
             description: 'Prueba reservar una cita de peluquería con Sofia',
             suggestions: [
@@ -457,7 +457,7 @@ export const translations = {
             type: 'Clínica Dental',
             name: 'SmileCenter',
             image: 'https://images.unsplash.com/photo-1629909613654-28e377c37b09?w=800&h=600&fit=crop',
-            phone: '+34 xxx xxx xxx',
+            phone: '  ',
             title: 'Clínica Dental',
             description: 'Intenta programar un chequeo dental con Laura',
             suggestions: [
@@ -471,7 +471,7 @@ export const translations = {
             type: 'Restaurante',
             name: 'La Terrazza',
             image: 'https://images.unsplash.com/photo-1514933651103-005eec06c04b?w=800&h=600&fit=crop',
-            phone: '+34 xxx xxx xxx',
+            phone: '  ',
             title: 'Restaurante',
             description: 'Haz una reserva para cenar con Carlos',
             suggestions: [
@@ -575,7 +575,7 @@ export const translations = {
         contact: {
           title: 'Contacto',
           email: 'support@velvetdesk.ai',
-          phone: '+34 xxx xxx xxx'
+          phone: '  '
         },
         copyright: '© 2025 VelvetDesk. Todos los derechos reservados.'
       }
