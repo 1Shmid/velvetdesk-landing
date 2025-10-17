@@ -1,6 +1,7 @@
 'use client'
 
 import { CheckCircle } from 'lucide-react'
+import Link from 'next/link'
 
 interface FinalCTASectionProps {
   t: any
@@ -23,9 +24,11 @@ export default function FinalCTASection({ t }: FinalCTASectionProps) {
           
           {/* CTA кнопка */}
           <div className="flex flex-col items-center gap-4">
-            <button className="bg-white text-purple-600 px-10 py-4 rounded-xl font-bold text-lg hover:scale-105 transition-all shadow-xl hover:shadow-2xl">
-              {t.finalCTA.ctaButton}
-            </button>
+            <Link href="/waitlist">
+              <button className="bg-white text-purple-600 px-10 py-4 rounded-xl font-bold text-lg hover:scale-105 transition-all shadow-xl hover:shadow-2xl">
+                {t.finalCTA.ctaButton}
+              </button>
+            </Link>
             
             {/* Trust badges под кнопкой */}
             <div className="flex flex-wrap items-center justify-center gap-x-4 gap-y-2 text-sm text-purple-100">

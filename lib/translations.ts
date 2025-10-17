@@ -18,7 +18,7 @@ export const translations = {
       phoneScreen: {
         incomingCall: 'Incoming Call...',
         assistantName: 'VelvetDesk AI Assistant',
-        phoneNumber: '  '
+        phoneNumber: 'пше ыефегы'
       },
       badges: {
         setup: 'Setup in 48 hours',
@@ -218,6 +218,25 @@ export const translations = {
         title: '30-Day Money-Back Guarantee',
         description: 'Not satisfied? Full refund, no questions asked.'
       }
+    },
+
+    waitlist: {
+      // Тексты ошибок валидации
+      required: 'This field is required',
+      invalidEmail: 'Please enter a valid email address',
+      invalidPhone: 'Please enter a valid phone number (e.g., +34 600 000 000)',
+      phoneMinLength: 'Phone number is too short',
+      realEmailRequired: 'Please use a valid business email address',
+      emailAlreadyRegistered: 'This email is already registered',
+      
+      // Success messages
+      successTitle: 'Welcome to the Waitlist! 🎉',
+      successMessage: 'We\'ve received your application. Check your email to verify your address.',
+      
+      // Error messages
+      errorTitle: 'Submission Failed',
+      errorMessage: 'Something went wrong. Please try again.',
+      errorNetwork: 'Network error. Please check your connection.',
     },
 
     // FAQ Section
@@ -511,6 +530,25 @@ export const translations = {
           description: '¿No satisfecho? Reembolso completo, sin preguntas.'
         }
       },
+
+      waitlist: {
+      // Textos de errores de validación
+      required: 'Este campo es obligatorio',
+      invalidEmail: 'Por favor ingresa un email válido',
+      invalidPhone: 'Por favor ingresa un número válido (ej: +34 600 000 000)',
+      phoneMinLength: 'El número es demasiado corto',
+      realEmailRequired: 'Por favor usa un email de negocio válido',
+      emailAlreadyRegistered: 'Este email ya está registrado',
+      
+      // Mensajes de éxito
+      successTitle: '¡Bienvenido a la Lista de Espera! 🎉',
+      successMessage: 'Hemos recibido tu solicitud. Revisa tu email para verificar tu dirección.',
+      
+      // Mensajes de error
+      errorTitle: 'Error al Enviar',
+      errorMessage: 'Algo salió mal. Por favor intenta de nuevo.',
+      errorNetwork: 'Error de conexión. Por favor verifica tu internet.',
+    },
 
       // FAQ Section
       faq: {

@@ -1,6 +1,7 @@
 'use client'
 
 import { CheckCircle, Gift } from 'lucide-react'
+import Link from 'next/link'
 
 interface PricingSectionProps {
   t: any
@@ -56,9 +57,11 @@ export default function PricingSection({ t }: PricingSectionProps) {
             
             {/* CTA Button + Process - ОБЪЕДИНЕНЫ, БЕЗ РАЗДЕЛИТЕЛЯ */}
             <div className="px-8 pt-6 pb-3 bg-white">
-              <button className="w-full py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold text-lg rounded-xl transition-all shadow-lg hover:shadow-xl mb-3">
-                {t.pricing.ctaButton}
-              </button>
+              <Link href="/waitlist">
+                <button className="w-full py-4 bg-purple-600 hover:bg-purple-700 text-white font-bold text-lg rounded-xl transition-all shadow-lg hover:shadow-xl mb-3">
+                   {t.pricing.ctaButton}
+                </button>
+              </Link>
               
               {/* Process - сразу под кнопкой */}
               <p className="text-center text-xs text-gray-600 leading-tight">
