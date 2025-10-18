@@ -1,40 +1,39 @@
 // app/verify/page.tsx
 'use client'
 
-import { useEffect, useState } from 'react'
+import { Suspense, useEffect, useState } from 'react'
 import { useSearchParams, useRouter } from 'next/navigation'
+import { CheckCircle, XCircle, Loader2 } from 'lucide-react'
 
-export default function VerifyPage() {
-  const searchParams = useSearchParams()
+// Компонент с логикой верификации
+function VerifyContent() {
   const router = useRouter()
+  const searchParams = useSearchParams()
+  const token = searchParams.get('token')
+  
   const [status, setStatus] = useState<'loading' | 'success' | 'error'>('loading')
   const [message, setMessage] = useState('')
-  
+
   useEffect(() => {
     const verifyEmail = async () => {
-      const token = searchParams.get('token')
-      
       if (!token) {
         setStatus('error')
         setMessage('Invalid verification link')
         return
       }
-      
+
       try {
-        // Вызываем API для верификации
         const response = await fetch('/api/verify', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ token })
         })
-        
+
         const data = await response.json()
-        
-        if (response.ok && data.success) {
+
+        if (response.ok) {
           setStatus('success')
           setMessage('Email verified successfully!')
-          
-          // Через 3 секунды редирект на главную
           setTimeout(() => {
             router.push('/')
           }, 3000)
@@ -42,61 +41,73 @@ export default function VerifyPage() {
           setStatus('error')
           setMessage(data.error || 'Verification failed')
         }
-        
       } catch (error) {
-        console.error('Verification error:', error)
         setStatus('error')
         setMessage('Something went wrong. Please try again.')
       }
     }
-    
+
     verifyEmail()
-  }, [searchParams, router])
-  
+  }, [token, router])
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-purple-50 via-white to-blue-50 flex items-center justify-center p-4">
-      <div className="bg-white rounded-2xl shadow-xl p-12 max-w-md w-full text-center">
+    <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white flex items-center justify-center p-4">
+      <div className="max-w-md w-full bg-white rounded-2xl shadow-xl p-8 text-center">
         {status === 'loading' && (
           <>
-            <div className="animate-spin rounded-full h-16 w-16 border-b-2 border-purple-600 mx-auto mb-6"></div>
-            <h1 className="text-2xl font-bold text-gray-900 mb-2">Verifying...</h1>
-            <p className="text-gray-600">Please wait while we verify your email.</p>
+            <Loader2 className="w-16 h-16 text-purple-600 mx-auto mb-4 animate-spin" />
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+              Verifying your email...
+            </h1>
+            <p className="text-gray-600">Please wait a moment</p>
           </>
         )}
-        
+
         {status === 'success' && (
           <>
-            <div className="text-6xl mb-6">✅</div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Email Verified!</h1>
-            <p className="text-gray-600 mb-6">
-              Thank you for verifying your email address. You're now on the VelvetDesk waitlist!
-            </p>
-            <div className="bg-green-50 border border-green-200 rounded-lg p-4 mb-6">
-              <p className="text-green-800 font-semibold">✓ Status: Verified</p>
-              <p className="text-green-700 text-sm mt-2">We'll contact you within 2-3 weeks</p>
-            </div>
+            <CheckCircle className="w-16 h-16 text-green-600 mx-auto mb-4" />
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+              Email Verified!
+            </h1>
+            <p className="text-gray-600 mb-4">{message}</p>
             <p className="text-sm text-gray-500">
               Redirecting to homepage in 3 seconds...
             </p>
           </>
         )}
-        
+
         {status === 'error' && (
           <>
-            <div className="text-6xl mb-6">❌</div>
-            <h1 className="text-3xl font-bold text-gray-900 mb-4">Verification Failed</h1>
-            <p className="text-gray-600 mb-6">
-              {message}
-            </p>
+            <XCircle className="w-16 h-16 text-red-600 mx-auto mb-4" />
+            <h1 className="text-2xl font-bold text-gray-900 mb-2">
+              Verification Failed
+            </h1>
+            <p className="text-gray-600 mb-6">{message}</p>
             <button
               onClick={() => router.push('/')}
-              className="bg-purple-600 text-white px-6 py-3 rounded-lg font-semibold hover:bg-purple-700 transition"
+              className="px-6 py-3 bg-purple-600 text-white rounded-lg hover:bg-purple-700 transition-colors"
             >
-              Go to Homepage
+              Return to Homepage
             </button>
           </>
         )}
       </div>
     </div>
+  )
+}
+
+// Главный компонент с Suspense
+export default function VerifyPage() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-gradient-to-br from-purple-50 to-white flex items-center justify-center">
+        <div className="text-center">
+          <Loader2 className="w-16 h-16 text-purple-600 mx-auto mb-4 animate-spin" />
+          <p className="text-gray-600">Loading...</p>
+        </div>
+      </div>
+    }>
+      <VerifyContent />
+    </Suspense>
   )
 }
