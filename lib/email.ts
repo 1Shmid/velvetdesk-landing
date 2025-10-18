@@ -37,14 +37,15 @@ export async function sendAdminNotification(data: {
 }
 
 // Email клиенту с подтверждением
-export async function sendVerificationEmail(data: {
-  email: string
-  contact_name: string
-  business_name: string
-  verification_token: string
-}) {
-  const verificationUrl = `${process.env.NEXT_PUBLIC_SITE_URL}/verify?token=${data.verification_token}`
-  
+    export async function sendVerificationEmail(data: {
+    email: string
+    contact_name: string
+    business_name: string
+    verification_token: string
+    }) {
+        const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://www.velvetdesk.ai'
+        const verificationUrl = `${baseUrl}/verify?token=${data.verification_token}`
+    
   try {
     await resend.emails.send({
       from: 'VelvetDesk <hello@velvetdesk.ai>',
