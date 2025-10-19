@@ -1,6 +1,7 @@
 'use client'
 
 import { Phone } from 'lucide-react'
+import Link from 'next/link'
 
 interface FooterProps {
   t: any
@@ -28,18 +29,18 @@ export default function Footer({ t }: FooterProps) {
           <div>
             <h3 className="text-white font-semibold mb-4 text-lg">{t.footer.legal.title}</h3>
             <div className="space-y-3">
-              <a 
-                href="#privacy"
+              <Link 
+                href="/privacy"
                 className="block text-gray-400 hover:text-white transition-colors"
               >
                 {t.footer.legal.privacyPolicy}
-              </a>
-              <a 
-                href="#terms"
+              </Link>
+              <Link 
+                href="/terms"
                 className="block text-gray-400 hover:text-white transition-colors"
               >
                 {t.footer.legal.termsOfService}
-              </a>
+              </Link>
             </div>
           </div>
           

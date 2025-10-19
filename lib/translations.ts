@@ -305,7 +305,54 @@ export const translations = {
         phone: '  '
       },
       copyright: '© 2025 VelvetDesk. All rights reserved.'
+    },   
+
+    privacy: {
+      title: 'Privacy Policy',
+      lastUpdated: 'Last updated: October 19, 2025',
+      sections: {
+        dataCollection: {
+          title: '1. Data We Collect',
+          content: 'We collect business information (name, email, phone, address), call recordings, transcripts, payment data, IP addresses, cookies, and usage analytics. By using our service, you consent to this collection.'
+        },
+        dataUsage: {
+          title: '2. How We Use Your Data',
+          content: 'We use collected data to provide services, improve AI models, process payments, send notifications, analyze usage patterns, and comply with legal obligations. We may use your data for marketing and product development without additional consent.'
+        },
+        dataStorage: {
+          title: '3. Data Storage & Third Parties',
+          content: 'Data is stored on Supabase (EU servers), processed via VAPI.ai for calls, Resend for emails, and payment processors. We are not responsible for third-party data breaches. Data retention: indefinite unless you request deletion.'
+        },
+        userRights: {
+          title: '4. Your Rights (GDPR Minimum)',
+          content: 'You may request data access or deletion by emailing support@velvetdesk.ai. Response time: up to 30 days. We reserve the right to retain data required for legal or operational purposes. No compensation for data-related issues.'
+        }
+      }
+    },
+    terms: {
+      title: 'Terms of Service',
+      lastUpdated: 'Last updated: October 19, 2025',
+      sections: {
+        service: {
+          title: '1. Service Description & Disclaimers',
+          content: 'VelvetDesk provides AI-powered call answering. We make NO GUARANTEES regarding uptime, accuracy, or results. Service provided "AS IS" without warranties of any kind. We are not liable for missed calls, incorrect bookings, or lost revenue.'
+        },
+        pricing: {
+          title: '2. Pricing & Payments',
+          content: '€50 setup fee (non-refundable) + €350/month subscription. Payments processed via third-party providers. Prices may change with 7 days notice. Failure to pay results in immediate service suspension. No prorated refunds.'
+        },
+        refunds: {
+          title: '3. Refunds & Cancellations',
+          content: 'Setup fee is NON-REFUNDABLE under all circumstances. Monthly subscription: 30-day money-back guarantee (first month only). After trial, NO REFUNDS for any reason. Cancellation requires 30 days notice. We may terminate service immediately without refund if terms violated.'
+        },
+        termination: {
+          title: '4. Limitation of Liability & Disputes',
+          content: 'Our liability is limited to amount paid in last 3 months (maximum €1,050). We are NOT LIABLE for indirect, consequential, or punitive damages. Customer indemnifies VelvetDesk against claims. Disputes resolved via binding arbitration in Spain under Spanish law. No class actions permitted.'
+        }
+      }
     }
+
+
   },
 
   // ===========================================================================
@@ -616,9 +663,54 @@ export const translations = {
           phone: '  '
         },
         copyright: '© 2025 VelvetDesk. Todos los derechos reservados.'
+    },
+
+    privacy: {
+      title: 'Política de Privacidad',
+      lastUpdated: 'Última actualización: 19 de octubre de 2025',
+      sections: {
+        dataCollection: {
+          title: '1. Datos que Recopilamos',
+          content: 'Recopilamos información empresarial (nombre, email, teléfono, dirección), grabaciones de llamadas, transcripciones, datos de pago, direcciones IP, cookies y analíticas. Al usar el servicio, consientes esta recopilación.'
+        },
+        dataUsage: {
+          title: '2. Cómo Usamos Sus Datos',
+          content: 'Usamos los datos para proveer servicios, mejorar modelos de IA, procesar pagos, enviar notificaciones, analizar uso y cumplir obligaciones legales. Podemos usar sus datos para marketing y desarrollo de productos sin consentimiento adicional.'
+        },
+        dataStorage: {
+          title: '3. Almacenamiento y Terceros',
+          content: 'Los datos se almacenan en Supabase (servidores UE), procesados via VAPI.ai para llamadas, Resend para emails y procesadores de pago. No somos responsables por brechas de terceros. Retención: indefinida salvo solicitud de eliminación.'
+        },
+        userRights: {
+          title: '4. Sus Derechos (Mínimo GDPR)',
+          content: 'Puede solicitar acceso o eliminación de datos escribiendo a support@velvetdesk.ai. Tiempo de respuesta: hasta 30 días. Nos reservamos el derecho de retener datos requeridos legalmente u operacionalmente. Sin compensación por problemas de datos.'
+        }
+      }
+    },
+    terms: {
+      title: 'Términos de Servicio',
+      lastUpdated: 'Última actualización: 19 de octubre de 2025',
+      sections: {
+        service: {
+          title: '1. Descripción del Servicio y Exenciones',
+          content: 'VelvetDesk provee contestación de llamadas con IA. NO GARANTIZAMOS tiempo de actividad, precisión o resultados. Servicio provisto "TAL CUAL" sin garantías de ningún tipo. No somos responsables por llamadas perdidas, reservas incorrectas o pérdida de ingresos.'
+        },
+        pricing: {
+          title: '2. Precios y Pagos',
+          content: 'Tarifa de configuración €50 (no reembolsable) + suscripción €350/mes. Pagos procesados por terceros. Los precios pueden cambiar con 7 días de aviso. El impago resulta en suspensión inmediata. Sin reembolsos prorrateados.'
+        },
+        refunds: {
+          title: '3. Reembolsos y Cancelaciones',
+          content: 'La tarifa de configuración NO ES REEMBOLSABLE bajo ninguna circunstancia. Suscripción mensual: garantía de 30 días (solo primer mes). Después del período de prueba, SIN REEMBOLSOS por ningún motivo. Cancelación requiere 30 días de aviso. Podemos terminar el servicio inmediatamente sin reembolso si se violan los términos.'
+        },
+        termination: {
+          title: '4. Limitación de Responsabilidad y Disputas',
+          content: 'Nuestra responsabilidad se limita al monto pagado en los últimos 3 meses (máximo €1.050). NO SOMOS RESPONSABLES por daños indirectos, consecuentes o punitivos. El cliente indemniza a VelvetDesk contra reclamos. Disputas resueltas via arbitraje vinculante en España bajo ley española. No se permiten acciones colectivas.'
+        }
       }
     }
-    }
+  }
+}
 
 export type TranslationKey = keyof typeof translations
 export type Translation = typeof translations.en
