@@ -11,7 +11,9 @@ export type WaitlistSubmission = {
   business_name: string
   contact_name: string
   email: string
-  phone: string
+  contact_phone: string
+  business_phone: string    
+  telecom_operator: string 
   business_type: 'beauty_salon' | 'dental_clinic' | 'restaurant' | 'other'
   website?: string
   country: string

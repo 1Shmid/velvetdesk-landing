@@ -55,3 +55,25 @@ a:focus-visible {
     display: none;
   }
 }
+
+/* Phone Input Styles */
+.phone-input-container {
+  width: 100%;
+}
+
+.phone-input-container .PhoneInputCountry {
+  padding: 12px;
+  border: 1px solid #d1d5db;
+  border-right: none;
+  border-radius: 0.5rem 0 0 0.5rem;
+  background: white;
+}
+
+.phone-input-container input {
+  border-radius: 0 0.5rem 0.5rem 0 !important;
+  border-left: none !important;
+}
+
+.phone-input-container .PhoneInputCountry:focus-within {
+  border-color: #a855f7;
+}

@@ -4,6 +4,7 @@ import { supabase } from '@/lib/supabase'
 import { sendVerificationEmail } from '@/lib/email'
 import { isValidPhoneNumber, parsePhoneNumber } from 'libphonenumber-js'
 import crypto from 'crypto'
+import { waitlistSchema } from '@/lib/validations/waitlist'
 
 export async function POST(request: NextRequest) {
   try {
@@ -11,77 +12,31 @@ export async function POST(request: NextRequest) {
     
     console.log('📥 Received data:', data)
     
-    // ✅ ВАЛИДАЦИЯ EMAIL
-    const emailRegex = /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i;
-    if (!emailRegex.test(data.email)) {
-      console.log('❌ Email validation failed:', data.email)
-      return NextResponse.json(
-        { success: false, error: 'Invalid email format' },
-        { status: 400 }
-      )
-    }
-    
-    // Проверка на одноразовые домены
-    const domain = data.email.split('@')[1]?.toLowerCase() || ''
-    const disposableDomains = [
-      'tempmail.com', 'guerrillamail.com', '10minutemail.com', 
-      'throwaway.email', 'mailinator.com', 'trashmail.com'
-    ]
-    
-    if (disposableDomains.includes(domain)) {
-      console.log('❌ Disposable email blocked:', domain)
-      return NextResponse.json(
-        { success: false, error: 'Please use a valid business email' },
-        { status: 400 }
-      )
-    }
-    
-    // ✅ ВАЛИДАЦИЯ PHONE (с libphonenumber-js)
+    // ✅ ВАЛИДАЦИЯ через Zod
     try {
-      const cleanedPhone = data.phone.replace(/[\s\-\(\)]/g, '')
+      const validated = waitlistSchema.parse(data)
       
-      if (!cleanedPhone.startsWith('+')) {
-        console.log('❌ Phone validation failed - no +:', data.phone)
-        return NextResponse.json(
-          { success: false, error: 'Phone must start with + (e.g., +34600000000)' },
-          { status: 400 }
-        )
+      // Если выбран "Other" и есть custom_operator, заменяем значение
+      if (validated.custom_operator && validated.custom_operator.trim() !== '') {
+        validated.telecom_operator = validated.custom_operator.trim()
       }
       
-      if (!isValidPhoneNumber(cleanedPhone)) {
-        console.log('❌ Phone validation failed - invalid format:', cleanedPhone)
-        return NextResponse.json(
-          { success: false, error: 'Please enter a valid international phone number' },
-          { status: 400 }
-        )
-      }
+      // Форматируем телефоны в E.164
+      const contactPhoneNumber = parsePhoneNumber(validated.contact_phone)
+      const businessPhoneNumber = parsePhoneNumber(validated.business_phone)
       
-      const phoneNumber = parsePhoneNumber(cleanedPhone)
+      validated.contact_phone = contactPhoneNumber!.format('E.164')
+      validated.business_phone = businessPhoneNumber!.format('E.164')
       
-      if (!phoneNumber || !phoneNumber.isValid()) {
-        console.log('❌ Phone validation failed - not valid:', cleanedPhone)
-        return NextResponse.json(
-          { success: false, error: 'Invalid phone number format' },
-          { status: 400 }
-        )
-      }
+      // Обновляем data
+      Object.assign(data, validated)
       
-      // Форматируем в международный формат E.164
-      data.phone = phoneNumber.format('E.164')
+      console.log('✅ All validations passed via Zod')
       
-    } catch (phoneError) {
-      console.log('❌ Phone validation error:', phoneError)
+    } catch (error: any) {
+      console.log('❌ Validation error:', error.errors)
       return NextResponse.json(
-        { success: false, error: 'Invalid phone number' },
-        { status: 400 }
-      )
-    }
-    
-    // ✅ ПРОВЕРЯЕМ ЧТО business_type НЕ ПУСТОЙ
-    if (!data.business_type) {
-      console.log('❌ business_type is missing')
-      return NextResponse.json(
-        { success: false, error: 'Business type is required' },
+        { success: false, error: error.errors[0]?.message || 'Validation failed' },
         { status: 400 }
       )
     }
@@ -108,15 +63,26 @@ export async function POST(request: NextRequest) {
     const verification_token = crypto.randomBytes(32).toString('hex')
     
     // Сохраняем в БД
+
+
+    // ✅ DEBUG: Проверяем что отправляем в БД
+      console.log('📤 Data before insert:', {
+        contact_phone: data.contact_phone,
+        business_phone: data.business_phone,
+        telecom_operator: data.telecom_operator
+      });
+
     const { data: waitlistEntry, error: dbError } = await supabase
       .from('waitlist')
       .insert([{
         business_name: data.business_name,
         contact_name: data.contact_name,
         email: data.email,
-        phone: data.phone,
+        contact_phone: data.contact_phone,
+        business_phone: data.business_phone,        // NEW
+        telecom_operator: data.telecom_operator,    // NEW
         business_type: data.business_type,
-        website: data.website || null,
+        website: data.website,
         message: data.message || null,
         country: data.country || 'ES',
         language: data.language || 'en',

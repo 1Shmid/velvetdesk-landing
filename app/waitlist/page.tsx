@@ -4,17 +4,24 @@
 import { translations } from '@/lib/translations'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
 import { toast, Toaster } from 'sonner'
 import { supabase, type WaitlistSubmission } from '@/lib/supabase'
 import { isValidPhoneNumber, parsePhoneNumber } from 'libphonenumber-js'
+import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css'
+import { useForm, Controller } from 'react-hook-form'
+import { z } from 'zod'
+import { zodResolver } from '@hookform/resolvers/zod'
+import { waitlistSchema } from '@/lib/validations/waitlist'
 
-type FormData = Omit<WaitlistSubmission, 'ip_address' | 'user_agent' | 'referrer' | 'country' | 'language'>
+
+type FormData = z.infer<typeof waitlistSchema>
 
 export default function WaitlistPage() {
   const router = useRouter()
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [showForm, setShowForm] = useState(false)
+  const [showCustomOperator, setShowCustomOperator] = useState(false)
   
   // Определяем язык из localStorage или browser
   const getLanguage = (): 'en' | 'es' => {
@@ -26,7 +33,9 @@ export default function WaitlistPage() {
   
   const lang = getLanguage()
   
-  const { register, handleSubmit, formState: { errors } } = useForm<FormData>()
+  const { register, handleSubmit, control, setValue, formState: { errors } } = useForm<FormData>({
+  resolver: zodResolver(waitlistSchema)
+  })
 
   const content = {
     en: {
@@ -325,42 +334,121 @@ export default function WaitlistPage() {
                 )}
               </div>
 
-              {/* Phone */}
+              {/* Contact Phone */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
-                  {t.phone} *
+                  Your Phone Number <span className="text-red-500">*</span>
                 </label>
-                <input
-                  {...register('phone', { 
-                    required: t.required,
-                    validate: (value) => {
-                      const cleaned = value.replace(/\s/g, '')
-                      
-                      if (!cleaned.startsWith('+')) {
-                        return 'Phone must start with + (e.g., +34600000000)'
-                      }
-                      
-                      if (cleaned.length < 11 || cleaned.length > 16) {
-                        return t.phoneMinLength
-                      }
-                      
-                      if (!/^\+[0-9]+$/.test(cleaned)) {
-                        return t.invalidPhone
-                      }
-                      
-                      return true
-                    }
-                  })}
-                  type="tel"
-                  placeholder="+34600000000"
-                  className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                <Controller
+                  name="contact_phone"
+                  control={control}
+                  rules={{ required: 'Your phone number is required' }}
+                  render={({ field: { onChange, value } }) => (
+                    <PhoneInput
+                      value={value}
+                      onChange={onChange}
+                      international
+                      defaultCountry="ES"
+                      placeholder="+34 600 000 000"
+                      numberInputProps={{
+                        className: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none"
+                      }}
+                      className="phone-input-container"
+                    />
+                  )}
                 />
-                {errors.phone && (
-                  <p className="text-red-500 text-sm mt-1">{errors.phone.message}</p>
+                {errors.contact_phone && (
+                  <p className="text-red-500 text-sm mt-1">{errors.contact_phone.message}</p>
+                )}
+                <p className="text-xs text-gray-500 mt-1">
+                  Your personal contact number
+                </p>
+              </div>
+
+              {/* Business Phone */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Business Phone Number <span className="text-red-500">*</span>
+                </label>
+                <Controller
+                  name="business_phone"
+                  control={control}
+                  rules={{ required: 'Business phone number is required' }}
+                  render={({ field: { onChange, value } }) => (
+                    <PhoneInput
+                      value={value}
+                      onChange={onChange}
+                      international
+                      defaultCountry="ES"
+                      placeholder="+34 600 000 000"
+                      numberInputProps={{
+                        className: "w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent outline-none"
+                      }}
+                      className="phone-input-container"
+                    />
+                  )}
+                />
+                {errors.business_phone && (
+                  <p className="text-red-500 text-sm mt-1">{errors.business_phone.message}</p>
+                )}
+                <p className="text-xs text-gray-500 mt-1">
+                  Phone number where AI will answer calls
+                </p>
+              </div>
+
+              {/* Telecom Operator */}
+              <div>
+                <label className="block text-sm font-semibold text-gray-700 mb-2">
+                  Telecom Operator <span className="text-red-500">*</span>
+                </label>
+                
+                {!showCustomOperator ? (
+                  <select
+                    {...register('telecom_operator', { required: 'Telecom operator is required' })}
+                    className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    defaultValue=""
+                    onChange={(e) => {
+                      if (e.target.value === 'Other') {
+                        setValue('telecom_operator', '')  // Очищаем значение
+                        setShowCustomOperator(true)
+                      }
+                    }}
+                  >
+                    <option value="" disabled>Select your provider</option>
+                    <option value="Movistar">Movistar</option>
+                    <option value="Vodafone">Vodafone</option>
+                    <option value="Orange">Orange</option>
+                    <option value="Yoigo">Yoigo</option>
+                    <option value="MásMóvil">MásMóvil</option>
+                    <option value="Other">Other</option>
+                  </select>
+                ) : (
+                  <div className="space-y-2">
+                    <input
+                      {...register('telecom_operator', { required: 'Please enter your operator name' })}
+                      type="text"
+                      placeholder="Enter your operator name"
+                      className="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                    />
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setValue('telecom_operator', '')
+                        setShowCustomOperator(false)
+                      }}
+                      className="text-sm text-purple-600 hover:text-purple-700"
+                    >
+                      ← Back to list
+                    </button>
+                  </div>
+                )}
+                
+                {errors.telecom_operator && (
+                  <p className="text-red-500 text-sm mt-1">{errors.telecom_operator.message}</p>
                 )}
               </div>
 
-              {/* Business Type - ✅ ДОБАВЛЕНО */}
+              {/* Business Type */}
               <div>
                 <label className="block text-sm font-semibold text-gray-700 mb-2">
                   {t.businessType} *
@@ -371,10 +459,12 @@ export default function WaitlistPage() {
                   defaultValue=""
                 >
                   <option value="" disabled>Select...</option>
-                  <option value="beauty_salon">{t.businessTypes.beauty_salon}</option>
-                  <option value="dental_clinic">{t.businessTypes.dental_clinic}</option>
-                  <option value="restaurant">{t.businessTypes.restaurant}</option>
-                  <option value="other">{t.businessTypes.other}</option>
+                  <option value="beauty_salon">Beauty Salon / Barbershop</option>
+                  <option value="dental_clinic">Dental Clinic / Medical</option>
+                  <option value="restaurant">Restaurant / Café</option>
+                  <option value="fitness_gym">Fitness Center / Gym</option>
+                  <option value="auto_repair">Auto Repair Shop</option>
+                  <option value="legal_consulting">Legal / Consulting Services</option>
                 </select>
                 {errors.business_type && (
                   <p className="text-red-500 text-sm mt-1">{errors.business_type.message}</p>
