@@ -164,6 +164,12 @@ export default function WaitlistPage() {
       })
 
       // Send GA4 event
+      console.log('🔔 Sending GA4 event: waitlist_submit', {
+        business_name: data.business_name,
+        business_type: data.business_type,
+        email: data.email
+      })
+
       sendGTMEvent({ 
         event: 'waitlist_submit', 
         value: {
@@ -172,6 +178,8 @@ export default function WaitlistPage() {
           email: data.email
         }
       })
+
+      console.log('✅ GA4 event sent')
 
       setTimeout(() => {
         router.push('/')
