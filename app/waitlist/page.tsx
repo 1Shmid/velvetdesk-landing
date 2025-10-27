@@ -164,15 +164,12 @@ export default function WaitlistPage() {
       })
 
       // Send GA4 event
-      console.log('🔔 Sending GA4 event: waitlist_submit')
-
       if (typeof window !== 'undefined' && (window as any).gtag) {
         (window as any).gtag('event', 'waitlist_submit', {
           business_name: data.business_name,
           business_type: data.business_type,
           email: data.email
         })
-        console.log('✅ GA4 event sent via gtag')
       }
 
       setTimeout(() => {
