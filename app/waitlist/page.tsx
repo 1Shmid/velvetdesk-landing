@@ -1,7 +1,7 @@
 // app/waitlist/page.tsx
 'use client'
 
-import { sendGTMEvent } from '@next/third-parties/google'
+
 import { translations } from '@/lib/translations'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -164,22 +164,16 @@ export default function WaitlistPage() {
       })
 
       // Send GA4 event
-      console.log('🔔 Sending GA4 event: waitlist_submit', {
-        business_name: data.business_name,
-        business_type: data.business_type,
-        email: data.email
-      })
+      console.log('🔔 Sending GA4 event: waitlist_submit')
 
-      sendGTMEvent({ 
-        event: 'waitlist_submit', 
-        value: {
+      if (typeof window !== 'undefined' && (window as any).gtag) {
+        (window as any).gtag('event', 'waitlist_submit', {
           business_name: data.business_name,
           business_type: data.business_type,
           email: data.email
-        }
-      })
-
-      console.log('✅ GA4 event sent')
+        })
+        console.log('✅ GA4 event sent via gtag')
+      }
 
       setTimeout(() => {
         router.push('/')
