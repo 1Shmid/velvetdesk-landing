@@ -175,7 +175,7 @@ export default function WaitlistPage() {
 
       setTimeout(() => {
         router.push('/')
-      }, 2000)
+      }, 2500)
 
     } catch (error: any) {
       console.error('❌ Full error:', error)
