@@ -1,6 +1,7 @@
 // app/waitlist/page.tsx
 'use client'
 
+import { sendGTMEvent } from '@next/third-parties/google'
 import { translations } from '@/lib/translations'
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
@@ -160,6 +161,16 @@ export default function WaitlistPage() {
       toast.success(t.successTitle, {
         description: t.successMessage,
         duration: 5000,
+      })
+
+      // Send GA4 event
+      sendGTMEvent({ 
+        event: 'waitlist_submit', 
+        value: {
+          business_name: data.business_name,
+          business_type: data.business_type,
+          email: data.email
+        }
       })
 
       setTimeout(() => {
